@@ -23,4 +23,30 @@ export const postRequest = async(url, body) => {
     }
 
     return data;
-}
+};
+
+export const getRequest = async (url) => {
+    try {
+      const response = await fetch(url);
+  
+      if (!response.ok) {
+        throw new Error('Failed to fetch data');
+      }
+  
+      try {
+        const data = await response.json();
+        return data;
+      } catch (jsonError) {
+        console.error('Error parsing JSON:', jsonError);
+        return { error: true, message: 'Failed to parse JSON response' };
+      }
+    } catch (error) {
+      let message = 'An error occurred...';
+  
+      if (error.message) {
+        message = error.message;
+      }
+  
+      return { error: true, message };
+    }
+  };
